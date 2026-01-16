@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/list">Students</a></li>
+        <li><a href="/add-user">Add Student</a></li>
+        <li><a href="/student">Sample List</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Student List</h1>
+      
+      <form action="/add-user/search" method="GET" class="search-form">
+        <input type="text" name="search_text" placeholder="search students...">
+        <button type="submit">Search</button>
+      </form>
+
+      <a href="/add-user" class="btn add-btn">+ Add New Student</a>
+      
+      <ul class="list">
+        <% students.forEach(function(student) { %>
+        <li class="list-item">
+          <span><strong>Name:</strong> <%= student.name %></span>
+          <span><strong>Email:</strong> <%= student.email %></span>
+          <span><strong>Age:</strong> <%= student.age %></span>
+          <a href="/add-user/edit/<%= student.id %>" class="btn edit-btn">Edit</a>
+          <form
+            action="/add-user/delete/<%= student.id %>"
+            method="POST"
+            class="inline-form"
+          >
+            <button type="submit" class="btn delete-btn">Delete</button>
+          </form>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+</html>
