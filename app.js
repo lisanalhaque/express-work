@@ -10,6 +10,9 @@ const PORT = 3000;
 
 const User = require("./models/user"); // Importing User model
 
+// Importing product routes
+const productRoutes = require("./models/routes/productRoutes");
+
 // Middleware to serve static files from 'public' directory
 app.use(express.static("public"));
 
@@ -24,6 +27,9 @@ app.use((req,res,next) => {                                     // Logging middl
 
 // Middleware to parse URL-encoded requests
 app.use(express.urlencoded({ extended: true }));
+
+// Using product routes
+app.use("/products", productRoutes);
 
 // MongoDB connection URL
 const mongoURL =
@@ -41,6 +47,8 @@ mongoose
 
 // Setting EJS as the templating engine
 app.set("view engine", "ejs");
+
+
 
 // Defining routes
 app.get("/wejs", (req, res) => {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <div class="card">
+      <h1>Student List</h1>
+
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <form action="" method="GET" class="search-form">
+          <input
+            type="text"
+            name="search_text"
+            placeholder="Search Products..."
+          />
+          <button class="btn btn-primary">Search</button>
+        </form>
+
+        <a href="" class="btn btn-primary"> + Add Product </a>
+      </div>
+
+      <!-- Product Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.forEach(function(product) { %>
+          <tr>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= product.description %></td>
+            <td>
+              <div class="actions">
+                <a
+                  href="/#/edit/<%= product.id %>"
+                  class="btn btn-warning"
+                >
+                  Edit
+                </a>
+
+                <form action="/#/delete/<%= product.id %>" method="POST">
+                  <button
+                    class="btn btn-danger"
+                    onclick="return confirm('Delete this product?')"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+</body>
+</html>
