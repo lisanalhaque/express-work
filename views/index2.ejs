@@ -3,15 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Products - Management System</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .product-actions .btn {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .top-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-     <div class="card">
-      <h1>Student List</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/list">Students</a></li>
+        <li><a href="/add-user">Add Student</a></li>
+        <li><a href="/product">Products</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Product Management</h1>
 
       <!-- Top Bar -->
       <div class="top-bar">
-        <form action="" method="GET" class="search-form">
+        <form action="/product" method="GET" class="search-form">
           <input
             type="text"
             name="search_text"
@@ -20,48 +126,100 @@
           <button class="btn btn-primary">Search</button>
         </form>
 
-        <a href="" class="btn btn-primary"> + Add Product </a>
+        <a href="/product/add" class="btn add-btn"> + Add Product </a>
       </div>
 
-      <!-- Product Table -->
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Image</th>
-          </tr>
-        </thead>
-        <tbody>
+      <!-- Product Grid -->
+      <% if (products && products.length > 0) { %>
+        <div class="product-grid">
           <% products.forEach(function(product) { %>
-          <tr>
-            <td><%= product.name %></td>
-            <td><%= product.price %></td>
-            <td><%= product.description %></td>
-            <td>
-              <div class="actions">
-                <a
-                  href="/#/edit/<%= product.id %>"
-                  class="btn btn-warning"
-                >
-                  Edit
-                </a>
-
-                <form action="/#/delete/<%= product.id %>" method="POST">
-                  <button
-                    class="btn btn-danger"
-                    onclick="return confirm('Delete this product?')"
-                  >
-                    Delete
+            <div class="product-card">
+              <% if (product.image) { %>
+                <img src="/uploads/<%= product.image %>" alt="<%= product.name %>" class="product-image">
+              <% } else { %>
+                <div class="product-image" style="display: flex; align-items: center; justify-content: center; background: #e0e0e0;">
+                  <span style="color: #999;">No Image</span>
+                </div>
+              <% } %>
+              
+              <div class="product-info">
+                <div class="product-name"><%= product.name %></div>
+                <div class="product-price">$<%= product.price %></div>
+                <div class="product-description"><%= product.description %></div>
+                
+                <div class="product-actions">
+                  <button class="btn btn-primary" onclick="viewProduct('<%= product._id %>', '<%= product.name %>', '<%= product.price %>', '<%= product.description %>', '<%= product.image || '' %>')">
+                     View Details
                   </button>
-                </form>
+                  <button class="btn btn-primary" onclick="editProduct('<%= product._id %>')" style="background-color: #f39c12;">
+                     Edit
+                  </button>
+                  <button class="btn btn-primary" onclick="deleteProduct('<%= product._id %>')" style="background-color: #e74c3c;">
+                     Delete
+                  </button>
+                </div>
               </div>
-            </td>
-          </tr>
+            </div>
           <% }); %>
-        </tbody>
-      </table>
+        </div>
+      <% } else { %>
+        <div class="empty-message">
+          <p>No products found. <a href="/product/add">Add one now!</a></p>
+        </div>
+      <% } %>
     </div>
+
+    <!-- Modal for viewing product details -->
+    <div id="productModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+      <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <h2 id="modalName" style="margin-top: 0;"></h2>
+        <% if (products && products.length > 0) { %>
+          <img id="modalImage" src="" alt="" style="width: 100%; height: 300px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem;">
+        <% } %>
+        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+        <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+        <button class="btn btn-primary" onclick="closeModal()" style="width: 100%; margin-top: 1rem;">Close</button>
+      </div>
+    </div>
+
+    <script>//
+      function viewProduct(id, name, price, description, image) {
+        document.getElementById('modalName').textContent = name;
+        document.getElementById('modalPrice').textContent = price;
+        document.getElementById('modalDescription').textContent = description;
+        if (image) {
+          document.getElementById('modalImage').src = '/uploads/' + image;
+          document.getElementById('modalImage').style.display = 'block';
+        } else {
+          document.getElementById('modalImage').style.display = 'none';
+        }
+        document.getElementById('productModal').style.display = 'flex';
+      }
+
+      function editProduct(id) {
+        window.location.href = '/product/edit/' + id;
+      }
+
+      function deleteProduct(id) {
+        if (confirm('Delete this product?')) {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '/product/delete/' + id;
+          document.body.appendChild(form);
+          form.submit();
+        }
+      }
+
+      function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+      }
+
+      // Close modal when clicking outside
+      document.getElementById('productModal').onclick = function(event) {
+        if (event.target === this) {
+          closeModal();
+        }
+      }
+    </script>
 </body>
 </html>

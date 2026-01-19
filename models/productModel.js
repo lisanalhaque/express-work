@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');// Importing mongoose
 
+
+// Defining the Product schema
 const productSchema = new mongoose.Schema({
     name: {type: String, required: true},
         price: Number,
@@ -7,4 +9,5 @@ const productSchema = new mongoose.Schema({
         image: String  // URL to the product image
 });
 
+// Exporting the Product model
 module.exports = mongoose.model('Product', productSchema);

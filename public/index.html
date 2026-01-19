@@ -3,29 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management System</title>
+    <title>Management System</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .welcome-container h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-container p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .welcome-buttons {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .management-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .management-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-button {
+            background-color: #667eea;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .management-card:first-child .card-button {
+            background-color: #27ae60;
+        }
+
+        .management-card:last-child .card-button {
+            background-color: #e67e22;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .management-card:first-child:hover .card-button {
+            background-color: #229954;
+        }
+
+        .management-card:last-child:hover .card-button {
+            background-color: #d35400;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-container h1 {
+                font-size: 2.5rem;
+            }
+
+            .welcome-buttons {
+                gap: 1.5rem;
+                flex-direction: column;
+            }
+
+            .management-card {
+                min-width: 100%;
+                padding: 2rem;
+            }
+
+            .card-icon {
+                font-size: 3rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/list">Students</a></li>
-            <li><a href="/add-user">Add Student</a></li>
-            <li><a href="/student">Sample List</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/product">Products</a></li>
         </ul>
     </nav>
 
     <div class="welcome-container">
-        <h1>Welcome to Student Management</h1>
-        <p>Manage your students efficiently with our modern system</p>
+        <h1>🎓 Management System</h1>
+        <p>Choose what you want to manage</p>
         
         <div class="welcome-buttons">
-            <a href="/list">View All Students</a>
-            <a href="/add-user">Add New Student</a>
-            <a href="/student">Sample Data</a>
+            <a href="/list" class="management-card">
+                <div class="card-icon">👥</div>
+                <div class="card-title">Student Management</div>
+                <div class="card-description">Manage students, add new records, and organize student information efficiently</div>
+                <div class="card-button">Open Students</div>
+            </a>
+            
+            <a href="/product" class="management-card">
+                <div class="card-icon">📦</div>
+                <div class="card-title">Product Management</div>
+                <div class="card-description">Manage products, add new items, and organize your inventory system</div>
+                <div class="card-button">Open Products</div>
+            </a>
         </div>
     </div>
 </body>
