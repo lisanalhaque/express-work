@@ -13,6 +13,17 @@ const User = require("./models/user"); // Importing User model
 // Importing product routes
 const productRoutes = require("./routes/productRoutes");
 
+//put - change data
+//post - add data
+//get - get data
+//delete - delete data
+//patch - partial update
+
+//methods of middleware - next(), res.send(), res.json(), res.render(), 
+
+
+// middleware is a function that runs between request and response
+
 // Middleware to serve static files from 'public' directory
 app.use(express.static("public"));
 app.use('/uploads', express.static('public/uploads')); // Serving uploaded files
@@ -40,6 +51,7 @@ const mongoURL =
 mongoose
   .connect(mongoURL)
   .then(() => {
+    // const db_name = mongoose.connection.db.databaseName;
     console.log("Connected to MongoDB");
   })
   .catch((error) => {
