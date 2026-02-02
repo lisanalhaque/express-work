@@ -1,6 +1,10 @@
 const express = require('express');
-const apiController = require('../controllers/api.controller');
-
 const router = express.Router();
+const apiController = require('../controlers/api.controlers');
 
-apiRouter.get("/test", apiController.testendpoint)
+router.get("/test", apiController.testMessage);
+router.post("/hash", apiController.hashPassword);
+router.post("/compare", apiController.comparePassword);
+
+
+module.exports = router;

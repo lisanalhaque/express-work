@@ -37,6 +37,8 @@ app.use((req,res,next) => {                                     // Logging middl
   next();                                                       // Proceed to next middleware/route handler
 });
 
+
+
 // Middleware to parse URL-encoded requests
 app.use(express.urlencoded({ extended: true }));
 
