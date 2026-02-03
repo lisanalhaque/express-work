@@ -1,4 +1,5 @@
 // Importing required modules
+require('dotenv').config();
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 
@@ -6,7 +7,7 @@ const { default: mongoose } = require("mongoose");
 const app = express();
 
 // Defining the port number
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const User = require("./models/user"); // Importing User model
 
@@ -45,8 +46,8 @@ app.use(express.urlencoded({ extended: true }));
 // Using product routes
 app.use("/product", productRoutes);
 
-// MongoDB connection URL
-const mongoURL =
+// MongoDB connection URL (set MONGO_URI in .env)
+const mongoURL = process.env.MONGO_URI ||
   "mongodb+srv://lisanop4444_db_user:KL17L7009@cluster0.qxlkrah.mongodb.net/?appName=mongosh+2.5.10";
 
 // Connect to MongoDB
